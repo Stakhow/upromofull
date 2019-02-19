@@ -1,0 +1,35 @@
+/*!
+Theme Name: upromo
+Theme URI: lion-art
+Author: lion-art
+Author URI: lion-art
+Description: Upromo theme
+Version: 1.0.0
+*/
+
+/*#preloader {*/
+  /*font-size: 48px;*/
+  /*position: fixed;*/
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*transform: translate(-50%, -50%);*/
+  /*width: 100vw;*/
+  /*height: 100vh;*/
+  /*background-color: rgba(255,255,255,.9);*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+/*}*/
+
+.banner__text h1{
+  text-transform: uppercase;
+}
+
+.product__name {
+  text-transform: uppercase;
+}
+
+.product-table .table-row:first-of-type{
+  background-color: #e7eefc;
+  text-align: center;
+}
