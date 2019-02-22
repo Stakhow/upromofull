@@ -352,7 +352,7 @@
   .feedback .input-group {
     margin-left: 0;
     margin-right: 0; }
-  .feedback .input-field {
+  .feedback .input-field,.feedback .btn {
     margin-bottom: 25px; }
     .feedback .input-field input {
       width: 100%; }

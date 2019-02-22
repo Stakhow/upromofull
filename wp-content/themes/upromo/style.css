@@ -33,3 +33,76 @@ Version: 1.0.0
   background-color: #e7eefc;
   text-align: center;
 }
+.examples-of-work .flex-wrap a{
+  max-width: 262px;
+}
+.header .main-menu a::after{
+  font-weight: 700;
+}
+.footer .main-menu a::after{
+  font-weight: 700;
+}
+.sidebar ul{
+  list-style: none;
+}
+.sidebar .menu li{
+  margin-bottom: 15px;
+  font-weight: 300;
+}
+.sidebar .menu .menu-item-has-children{
+  margin-bottom: 36px;
+}
+.sidebar .menu .menu-item-has-children>a,
+.sidebar .menu>li>a
+{
+  text-transform: uppercase;
+  color: #07b1e8;
+  border-bottom: 1px solid #07b1e8;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  display: block;
+}
+.sidebar .menu .sub-menu>li>a{
+  text-transform: capitalize;
+}
+.sidebar .menu .sub-menu a:hover{
+  text-decoration: underline;
+}
+
+.breadcrumbs .kb_sep{
+  display: flex;
+  align-items: center;
+  margin: 0 15px;
+}
+.breadcrumbs a:hover{
+  opacity: .7;
+}
+
+input.btn {
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+ input.btn.btn-common:hover {
+  background-color: #00aeef;
+}
+
+span.wpcf7-not-valid-tip{
+  margin-top: 10px;
+}
+
+form .wpcf7-response-output {
+  border-radius: 10px;
+  border-width: 1px;
+  padding: 15px;
+  font-weight: 300;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 360px;
+}
+
+img.custom-logo{
+  width: 100%!important;
+}

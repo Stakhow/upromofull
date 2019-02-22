@@ -4,20 +4,8 @@
       <div class="section-head">
         <?php the_field('feedback_title', 8) ?>
       </div>
-
-      <form action="">
-        <div class="input-group">
-          <div class="input-field">
-            <label for="">Ваше имя</label>
-            <input type="text" placeholder="Введдите ваше имя">
-          </div>
-          <div class="input-field">
-            <label for="">Номер телефона</label>
-            <input type="tel" placeholder="Ваш номер телефона">
-          </div>
-          <button class="btn btn-common" type="submit">Отправить</button>
-        </div>
-      </form>
+      <?php echo do_shortcode('[contact-form-7 id="6" title="Свяжитесь с нами (форма на каждой странице)"]'); ?>
     </div>
   </div>
 </section>
+

@@ -8,102 +8,19 @@
 <?php get_header();
 
 global $wp_query;
-
+$page_id = $wp_query->post->ID;
 ?>
+<div class="container">
+  <?php if (function_exists('kama_breadcrumbs') ) kama_breadcrumbs(); ?>
+</div>
 
 <section class="common-section product">
   <div class="container">
     <div class="main-wrap">
 
-      <!--SIDEBAR-->
-      <aside class="sidebar">
-        <div class="sidebar-item">
-          <h5>Полиграфия</h5>
-          <ul>
-            <li><a href="#">Визитки</a>
-            </li>
-            <li><a href="#">Листовки и флаеры</a>
-            </li>
-            <li><a href="#">Афиши и плакаты</a>
-            </li>
-            <li><a href="#">Буклеты и брошюры</a>
-            </li>
-            <li><a href="#">Календари</a>
-            </li>
-            <li><a href="#">Открытки</a>
-            </li>
-            <li><a href="#">Журналы и газеты</a>
-            </li>
-            <li><a href="#">Книги и блокноты</a>
-            </li>
-            <li><a href="#">Бланки и каталоги</a>
-            </li>
-            <li><a href="#">Бумажные пакеты</a>
-            </li>
-            <li><a href="#">Стикеры, наклейки и этикетки</a>
-            </li>
-            <li><a href="#">Подарочная картонная упаковка</a>
-            </li>
-            <li><a href="#">Конверты</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="sidebar-item">
-          <h5>Сувенирная продукция</h5>
-          <ul>
-            <li><a href="#">Сувенирная продукция</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="sidebar-item">
-          <h5>Рекламно-выставочное
-            оборудование</h5>
-          <ul>
-            <li><a href="#">Press-wall</a>
-            </li>
-            <li class="current-menu-item"><a href="#">Roll-up</a>
-            </li>
-            <li><a href="#">Pop-up</a>
-            </li>
-            <li><a href="#">Баннерные стенды</a>
-            </li>
-            <li><a href="#">Штендеры</a>
-            </li>
-            <li><a href="#">Ценникодержатели</a>
-            </li>
-            <li><a href="#">Карманы для печатной продукции</a>
-            </li>
-            <li><a href="#">Буклетницы рекламные</a>
-            </li>
-            <li><a href="#">Стойки (напольные)</a>
-            </li>
-            <li><a href="#">Многорамочные системы</a>
-            </li>
-            <li><a href="#">Рамки для информации</a>
-            </li>
-            <li><a href="#">Диспенсеры таблички</a>
-            </li>
-            <li><a href="#">Настенные информационные стенды</a>
-            </li>
-          </ul>
-        </div>
-        <div class="sidebar-item">
-          <h5>НАРУЖНАЯ РЕКЛАМА</h5>
-          <ul>
-            <li><a href="#">Объёмные буквы</a>
-            </li>
-            <li><a href="#">Светодиодные вывески</a>
-            </li>
-            <li><a href="#">Световые короба</a>
-            </li>
-            <li><a href="#">Изготовление вывесок</a>
-            </li>
-          </ul>
-        </div>
-
-      </aside>
+      <!--region SIDEBAR-->
+      <?php get_sidebar('Sidebar'); ?>
+      <!--endregion-->
 
       <main class="main-content">
         <div class="product__img">
@@ -116,7 +33,7 @@ global $wp_query;
             </span>
             <h3><?php the_title();  ?></h3>
           </div>
-          <a href="#" class="btn btn-common">Заказать</a>
+          <a data-fancybox data-src="#productSimpleForm" href="javascript:; "class="btn btn-common btn-order">Заказать</a>
         </div>
         <article class="product__article">
           <?php the_post(); ?>
@@ -124,96 +41,14 @@ global $wp_query;
         </article>
 
 
-        <?php
-        $get_table = get_field('product_table');
 
-//                        echo "<pre>";
-//                            echo (key($get_table));
-//                        echo "</pre>";
-//                        die();
+        <?php get_template_part(TP. 'product-table-template') ?>
 
+        <?php get_template_part(TP. 'product-list-group') ?>
 
-        ?>
-        <?php if( have_rows('product_table', get_the_ID()) ): ?>
-          <?php while( have_rows('product_table', get_the_ID()) ): the_row(); ?>
-            <div class="product-table">
-              <div class="product-table__wrap">
-                <div class="product-table__title">
-                  <h6><?php the_sub_field('product_table_title'); ?></h6>
-                </div>
-                <div class="flex-wrap">
-                  <div class="product-table__info">
-                    <ul>
-                      <?php $count = 0;
-                      ?>
-                      <?php if( have_rows('table_body') ): ?>
-                        <?php while( have_rows('table_body') ): the_row(); ?>
-                          <li class="table-row">
-                            <?php if( have_rows('row')) : ?>
-                              <?php while( have_rows('row')) : the_row(); ?>
-                                <div class="table-cell"><?php the_sub_field('cell'); ?></div>
+        <?php get_template_part(TP. 'custom-props-block') ?>
 
-                              <?php endwhile; ?>
-                            <?php endif; ?>
-                            <?php
-                            $count++;
-                            if(!$count): ?>
-                              <div class="table-cell">
-                                <a data-fancybox="" data-src="#popupToFillForm" href="javascript:;" class="btn btn-common">ЗАКАЗАТЬ</a>
-                              </div>
-                            <?php endif;
-
-                            ?>
-
-                          </li>
-                        <?php endwhile; ?>
-                      <?php endif; ?>
-
-
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          <?php endwhile; ?>
-        <?php endif; ?>
-
-
-
-
-
-        <!--region ПРИМЕРЫ РАБОТ-->
-        <div class="examples-of-work">
-          <div class="section-head">
-            <small>ПОРТФОЛИО</small>
-            <h2>ПРИМЕРЫ РАБОТ</h2>
-          </div>
-          <div class="flex-wrap">
-            <a href="images/exmpls-of-works__full.jpg" data-fancybox="images">
-              <img src="images/exmpls-of-works__1.jpg" alt="" />
-              <div class="examples-of-work__descr">
-                <h3>Pop-Up 300 x 300 см</h3>
-                <p>Выставка веб-технологий, г.Москва</p>
-              </div>
-            </a>
-            <a href="images/exmpls-of-works__full.jpg" data-fancybox="images">
-              <img src="images/exmpls-of-works__2.jpg" alt="" />
-              <div class="examples-of-work__descr">
-                <h3>Pop-Up 300 x 300 см</h3>
-                <p>Выставка веб-технологий, г.Ростов</p>
-              </div>
-            </a>
-            <a href="images/exmpls-of-works__full.jpg" data-fancybox="images">
-              <img src="images/exmpls-of-works__3.jpg" alt="" />
-              <div class="examples-of-work__descr">
-                <h3>Pop-Up 300 x 300 см</h3>
-                <p>Выставка веб-технологий, г.Воронеж</p>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!--endregion-->
+        <?php get_template_part(TP. 'portfolio-template') ?>
 
       </main>
     </div>
@@ -225,6 +60,89 @@ global $wp_query;
 <!--region СВЯЖИТЕСЬ С НАМИ-->
   <?php get_template_part(TP. 'feedback-section') ?>
 <!--endregion-->
+
+
+  <!--<Выберите оснащение>-->
+<?php if( have_rows('product_equipment', $page_id) ): ?>
+  <div style="display: none;" id="popupToSetEquipment" class="popup popup_set-props">
+    <div class="">
+      <div class="set-custom-props">
+        <div class="set-custom-props__title">
+                    <span>
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17" height="18" viewBox="0 0 17 18"><defs><path id="aai8a" d="M748.936 1973.004a.275.275 0 0 0-.366-.13 4.38 4.38 0 0 1-.696.26.275.275 0 0 0-.195.21l-.291 1.455a.31.31 0 0 1-.302.248h-.794a.31.31 0 0 1-.302-.248l-.291-1.455a.275.275 0 0 0-.196-.21 4.37 4.37 0 0 1-.966-.4.275.275 0 0 0-.287.01l-1.235.823a.31.31 0 0 1-.389-.039l-.561-.56a.31.31 0 0 1-.039-.39l.823-1.234a.275.275 0 0 0 .011-.288 4.368 4.368 0 0 1-.4-.966.275.275 0 0 0-.211-.195l-1.455-.291a.31.31 0 0 1-.247-.303v-.793a.31.31 0 0 1 .247-.303l1.455-.29a.275.275 0 0 0 .21-.196 4.37 4.37 0 0 1 .401-.966.275.275 0 0 0-.01-.287l-.823-1.235a.31.31 0 0 1 .038-.389l.561-.561a.31.31 0 0 1 .39-.039l1.234.823a.275.275 0 0 0 .287.011 4.37 4.37 0 0 1 .966-.4c.1-.028.175-.11.196-.21l.29-1.456a.31.31 0 0 1 .303-.247h.794a.31.31 0 0 1 .302.247l.29 1.455c.021.102.097.183.196.211.337.094.662.229.966.4.09.051.202.047.288-.01l1.234-.824a.31.31 0 0 1 .39.039l.56.561a.31.31 0 0 1 .04.39l-.824 1.234a.275.275 0 0 0-.01.287c.17.304.305.63.4.966.028.1.109.175.21.196l1.455.29a.31.31 0 0 1 .248.303v.794a.31.31 0 0 1-.248.302l-1.454.29a.275.275 0 0 0-.211.197 4.377 4.377 0 0 1-.268.712.275.275 0 1 0 .495.238c.1-.206.184-.42.254-.64l1.292-.258a.86.86 0 0 0 .69-.841v-.794a.86.86 0 0 0-.69-.842l-1.293-.258a4.922 4.922 0 0 0-.32-.775l.73-1.097a.86.86 0 0 0-.107-1.083l-.56-.561a.86.86 0 0 0-1.084-.107l-1.097.73a4.924 4.924 0 0 0-.774-.32l-.259-1.292a.86.86 0 0 0-.841-.69h-.794a.86.86 0 0 0-.842.69l-.258 1.292a4.922 4.922 0 0 0-.775.321l-1.097-.731a.86.86 0 0 0-1.083.107l-.56.561a.86.86 0 0 0-.108 1.083l.731 1.097a4.923 4.923 0 0 0-.321.775l-1.292.258a.86.86 0 0 0-.69.842v.794c0 .407.29.761.69.841l1.292.259c.085.267.192.526.321.774l-.731 1.097a.86.86 0 0 0 .107 1.083l.561.562a.86.86 0 0 0 1.083.107l1.097-.731c.248.128.508.236.775.32l.258 1.293c.08.4.434.69.842.69h.794a.86.86 0 0 0 .841-.69l.259-1.292c.212-.068.42-.15.62-.245a.275.275 0 0 0 .13-.366z"/><path id="aai8b" d="M748.917 1970.315a.274.274 0 0 0 .37-.12 3.095 3.095 0 0 0-2.752-4.5c-.811 0-1.577.312-2.158.878a.275.275 0 1 0 .384.394 2.528 2.528 0 0 1 1.774-.721 2.544 2.544 0 0 1 2.263 3.699c-.07.135-.016.3.119.37z"/><path id="aai8c" d="M743.993 1967.553a.275.275 0 0 0-.35.17 3.095 3.095 0 0 0 2.924 4.098 3.07 3.07 0 0 0 1.812-.586.275.275 0 0 0-.323-.445 2.544 2.544 0 0 1-3.893-2.887.275.275 0 0 0-.17-.35z"/><path id="aai8d" d="M756.467 1973.814l-.795-.159a3.324 3.324 0 0 0-.174-.42l.45-.676a.66.66 0 0 0-.083-.83l-.368-.37a.66.66 0 0 0-.831-.081l-.675.45a3.321 3.321 0 0 0-.421-.175l-.159-.795a.66.66 0 0 0-.646-.53h-.521a.66.66 0 0 0-.646.53l-.159.795a3.329 3.329 0 0 0-.42.175l-.676-.45a.66.66 0 0 0-.83.082l-.37.369a.66.66 0 0 0-.081.83l.45.675a3.324 3.324 0 0 0-.225.585.275.275 0 0 0 .53.148c.06-.214.145-.42.254-.614a.275.275 0 0 0-.01-.287l-.542-.812a.109.109 0 0 1 .014-.136l.369-.37a.109.109 0 0 1 .136-.013l.812.541a.275.275 0 0 0 .287.011c.193-.109.4-.195.614-.254.1-.028.175-.11.195-.211l.192-.956a.109.109 0 0 1 .106-.087h.521c.052 0 .097.036.107.087l.19.956c.021.101.097.183.196.21.214.06.42.146.614.255.09.05.202.047.288-.01l.81-.542a.109.109 0 0 1 .138.014l.368.369a.109.109 0 0 1 .014.136l-.54.812a.275.275 0 0 0-.012.287c.11.193.195.4.255.614.028.1.109.175.21.196l.956.19c.05.01.087.055.087.107v.522a.109.109 0 0 1-.087.106l-.956.19a.275.275 0 0 0-.21.196c-.06.214-.146.421-.255.614a.275.275 0 0 0 .011.288l.54.811c.03.043.024.1-.013.137l-.368.368a.109.109 0 0 1-.137.014l-.811-.54a.275.275 0 0 0-.288-.012c-.193.11-.4.195-.614.255a.275.275 0 0 0-.195.21l-.191.957a.109.109 0 0 1-.107.087h-.521a.109.109 0 0 1-.107-.087l-.19-.956a.275.275 0 0 0-.196-.211 2.776 2.776 0 0 1-.614-.255.275.275 0 0 0-.288.011l-.81.54a.109.109 0 0 1-.137-.013l-.37-.368a.109.109 0 0 1-.013-.137l.541-.811a.275.275 0 0 0 .01-.288 2.776 2.776 0 0 1-.254-.614.275.275 0 0 0-.21-.195l-.956-.191a.109.109 0 0 1-.087-.107v-.521c0-.052.036-.096.087-.106l.058-.012a.275.275 0 1 0-.108-.54l-.058.012a.66.66 0 0 0-.53.646v.521a.66.66 0 0 0 .53.646l.795.16c.049.143.107.284.175.42l-.45.675a.66.66 0 0 0 .082.83l.369.37a.66.66 0 0 0 .83.082l.675-.45c.136.067.277.126.421.174l.16.795a.66.66 0 0 0 .645.53h.521a.66.66 0 0 0 .646-.53l.159-.795c.144-.048.285-.107.421-.174l.675.45a.66.66 0 0 0 .83-.083l.37-.368a.66.66 0 0 0 .082-.831l-.45-.675c.067-.136.126-.277.174-.42l.795-.16a.66.66 0 0 0 .53-.646v-.521a.66.66 0 0 0-.53-.646z"/><path id="aai8e" d="M752.59 1973.817c.547 0 .99.444.99.99a.275.275 0 0 0 .55 0c0-.85-.69-1.54-1.54-1.54-.849 0-1.54.69-1.54 1.54a1.542 1.542 0 0 0 2.482 1.22.275.275 0 0 0-.337-.436.991.991 0 1 1-.605-1.774z"/><path id="aai8f" d="M745.414 1968.756a1.127 1.127 0 0 1 2.251 0c0 .62-.505 1.125-1.125 1.125s-1.126-.505-1.126-1.125zm2.801 0c0-.924-.751-1.676-1.675-1.676s-1.676.752-1.676 1.676c0 .924.752 1.675 1.676 1.675.924 0 1.675-.751 1.675-1.675z"/></defs><g><g transform="translate(-740 -1962)"><g><g><g><g><use fill="#fff" xlink:href="#aai8a"/></g><g><use fill="#fff" xlink:href="#aai8b"/></g><g><use fill="#fff" xlink:href="#aai8c"/></g><g><use fill="#fff" xlink:href="#aai8d"/></g><g><use fill="#fff" xlink:href="#aai8e"/></g><g><use fill="#fff" xlink:href="#aai8f"/></g></g></g></g></g></g></svg>
+				</span>
+          <h5>Выберите оснащение</h5>
+        </div>
+        <div class="form-wrap">
+          <div class="input-group">
+            <div class="input-field">
+              <div class="custom-select multiple-select">
+                <ul>
+                  <?php while( have_rows('product_equipment', $page_id) ): the_row(); ?>
+                    <li>
+                      <p><?php the_sub_field('name'); ?></p>
+                      <span>+<?php the_sub_field('price'); ?> руб.</span>
+                    </li>
+                  <?php endwhile; ?>
+                </ul>
+                <button class="btn-drop"></button>
+              </div>
+            </div>
+            <div class="input-field">
+              <button class="btn btn-common" type="submit">ГОТОВО</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+  <!--</Выберите оснащение>-->
+
+  <div class="custom-select__button"></div>
+
+  <!--<Выберите печать>-->
+<?php if( have_rows('product_print', $page_id) ): ?>
+  <div style="display: none;" id="popupToSetPrint" class="popup popup_set-props">
+    <div class="">
+      <div class="set-custom-props">
+        <div class="set-custom-props__title">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="33" viewBox="0 0 35 33"><defs><path id="ym5qa" d="M743.91 1269.726c-.267.266-.583.4-.947.4-.365 0-.68-.134-.947-.4a1.293 1.293 0 0 1-.399-.947c0-.364.133-.68.4-.946.266-.267.581-.4.946-.4.364 0 .68.133.946.4.266.266.4.582.4.946 0 .365-.133.68-.4.947zm-4.986-2.293h-18.847v-13.462h13.462v3.366c0 .56.197 1.037.59 1.43.392.393.868.589 1.43.589h3.365zm0 13.462h-18.847v-5.384h18.847zm6.89-14.966c-.793-.792-1.743-1.188-2.851-1.188h-1.346v-5.385c0-.56-.14-1.178-.421-1.85-.28-.674-.617-1.207-1.01-1.6l-3.197-3.197c-.393-.392-.926-.729-1.598-1.01-.674-.28-1.29-.42-1.852-.42h-14.135c-.56 0-1.038.196-1.43.589-.393.392-.59.87-.59 1.43v11.443h-1.345c-1.108 0-2.058.396-2.85 1.188-.793.792-1.189 1.743-1.189 2.85v8.75c0 .183.067.34.2.474.133.133.29.2.473.2h4.712v3.365c0 .561.196 1.038.589 1.43.392.393.87.59 1.43.59h20.193c.56 0 1.038-.197 1.43-.59.393-.392.59-.869.59-1.43v-3.365h4.711c.182 0 .34-.067.473-.2.133-.133.2-.29.2-.473v-8.75c0-1.108-.396-2.059-1.188-2.85z"/></defs><g><g transform="translate(-712 -1251)"><use fill="#fff" xlink:href="#ym5qa"/></g></g></svg>
+          </span>
+          <h5>Выберите печать</h5>
+        </div>
+        <div class="form-wrap">
+          <div class="input-group">
+            <div class="input-field">
+              <div class="custom-select single-select">
+                <ul>
+
+                  <?php while( have_rows('product_print', $page_id) ): the_row(); ?>
+                    <li>
+                      <div class="custom-select__button"></div>
+                      <p><?php the_sub_field('name'); ?></p>
+                      <span>+<?php the_sub_field('price'); ?> руб.</span>
+                    </li>
+                  <?php endwhile; ?>
+
+                </ul>
+                <button class="btn-drop"></button>
+              </div>
+            </div>
+            <div class="input-field">
+              <button class="btn btn-common" type="submit">ГОТОВО</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+  <!--</Выберите печать>-->
+
+
+
 
 
 <?php get_footer(); ?>

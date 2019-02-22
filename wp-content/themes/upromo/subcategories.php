@@ -4,9 +4,21 @@
  */ ?>
 
 <?php get_header(); ?>
+<?php
 
+  global $wp_query;
 
-<section class="banner base-gradient" style="background-image: url(<?php the_post_thumbnail_url() ?>);">
+  $args = array(
+    'post_parent' => $wp_query->post->ID,
+    'post_type'   => 'page',
+    'numberposts' => -1,
+    'post_status' => 'any'
+  );
+  $children = get_children( $args );
+  $page_style = "background-image: url(" . get_the_post_thumbnail_url() . ")";
+?>
+
+<section class="banner base-gradient" style=" <?php echo get_the_post_thumbnail_url() ? $page_style : ""; ?>">
   <div class="container">
     <div class="flex-wrap">
       <div class="banner__text">
@@ -17,32 +29,15 @@
 </section>
 
 
-<!--region BREADCRUMBS-->
 <div class="container">
-  <div class="breadcrumbs">
-    <ul>
-      <li><a href="#">Главная страница</a></li>
-      <li>Продукция</li>
-    </ul>
-  </div>
+  <?php if (function_exists('kama_breadcrumbs') ) kama_breadcrumbs(); ?>
 </div>
-<!--endregion-->
 
 
 
 <section class="section-services" style="background-image: url(<?php the_field('service_section_bg', get_the_ID()) ?>);">
   <div class="container">
-    <?php
-    global $wp_query;
 
-    $args = array(
-      'post_parent' => $wp_query->post->ID,
-      'post_type'   => 'page',
-      'numberposts' => -1,
-      'post_status' => 'any'
-    );
-    $children = get_children( $args );
-    ?>
 
     <ul class="production-list subproduction-list">
       <?php foreach ($children as $child): ?>

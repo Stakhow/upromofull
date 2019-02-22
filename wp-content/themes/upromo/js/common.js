@@ -242,6 +242,17 @@
 			});
 		});
 
+		$('.kinds-of-forms.sizes input').click(function () {
+			if ($(this).prop('checked')) {
+				$('#pechatNakleyek .set-sizes input').val('');
+			}
+		});
+
+
+
+
+
+
 		$('#pechatNakleyek').submit(function (e) {
 
 			e.preventDefault();
@@ -250,18 +261,22 @@
 			var size = $('input[name="size"]:checked').val();
 			var customHeight = $('input[name="customHeight"]').val();
 			var customWidth = $('input[name="customWidth"]').val();
-			var customQauntity = $('input[name="qauntity"]').val();
+			var customQauntity = $('input[name="quantity"]').val();
 
-			$('#testform input[name="forma"]').val(forma);
-			$('#testform input[name="size"]').val(size);
-			$('#testform input[name="customHeight"]').val(customHeight);
-			$('#testform input[name="customWidth"]').val(customWidth);
-			$('#testform input[name="qauntity"]').val(customQauntity);
+			$('#wpcf7-f645-p343-o2 input[name="forma"]').val(forma);
+			$('#wpcf7-f645-p343-o2 input[name="size"]').val(size);
+			$('#wpcf7-f645-p343-o2 input[name="customHeight"]').val(customHeight);
+			$('#wpcf7-f645-p343-o2 input[name="customWidth"]').val(customWidth);
+			$('#wpcf7-f645-p343-o2 input[name="quantity"]').val(customQauntity);
 		});
 
 		$('#pechatNakleyek').submit(function (e) {
 			e.preventDefault();
 		});
+
+		var curLinkHref = decodeURIComponent(window.location.href);
+		var curLinkOrigin = window.location.origin;
+		var curLinkHrefPage = curLinkHref.replace(curLinkOrigin, '');
 
 		$("[data-fancybox]").fancybox({
 			afterShow: function afterShow() {
@@ -270,16 +285,23 @@
 				var size = $('input[name="size"]:checked').val();
 				var customHeight = $('input[name="customHeight"]').val();
 				var customWidth = $('input[name="customWidth"]').val();
-				var customQauntity = $('input[name="qauntity"]').val();
+				var customQauntity = $('input[name="quantity"]').val();
 
-				$('#testform input[name="forma"]').val(forma);
-				$('#testform input[name="size"]').val(size);
-				$('#testform input[name="customHeight"]').val(customHeight);
-				$('#testform input[name="customWidth"]').val(customWidth);
-				$('#testform input[name="qauntity"]').val(customQauntity);
+				$('#wpcf7-f645-p343-o2 input[name="forma"]').val(forma);
+				$('#wpcf7-f645-p343-o2 input[name="size"]').val(size);
+				$('#wpcf7-f645-p343-o2 input[name="customHeight"]').val(customHeight);
+				$('#wpcf7-f645-p343-o2 input[name="customWidth"]').val(customWidth);
+				$('#wpcf7-f645-p343-o2 input[name="quantity"]').val(customQauntity);
+				$('#wpcf7-f645-p343-o2 input[name="curLinkHrefPage"]').val(curLinkHrefPage);
 			}
+
+
 		});
 
+
+		/*
+		* Перенос description при открытии
+		* */
 		$('.examples-of-work a').fancybox({
 			beforeShow: function beforeShow() {},
 			afterShow: function afterShow() {
@@ -288,5 +310,61 @@
 				$(descr).find('.examples-of-work__descr').clone().appendTo($('.fancybox-content'));
 			}
 		});
+
+		/* Заполнение формы заказа данными с карточки товара */
+		var productCard, productName, productDescription, productQuantity, productPrice;
+		$('.product-list li .btn-order')
+			.click(function () {
+				productCard = $(this).closest($('.product-list>li'));
+				productName =  productCard.find($('.product-title-name')).text();
+				productDescription =  productCard.find($('.product-list__descr')).text();
+				productQuantity =  productCard.find($('.product-quantity')).val();
+				productPrice =  productCard.find($('.current-price .price-value')).text();
+			})
+			.fancybox({
+				afterShow: function afterShow () {
+					$('#wpcf7-f647-p473-o3 input[name="productName"]').val(productName);
+					$('#wpcf7-f647-p473-o3 input[name="productDescription"]').val(productDescription);
+					$('#wpcf7-f647-p473-o3 input[name="productQuantity"]').val(productQuantity);
+					$('#wpcf7-f647-p473-o3 input[name="productPrice"]').val(productPrice);
+					$('#wpcf7-f647-p473-o3 input[name="curLinkHrefPage"]').val(curLinkHrefPage);
+				}
+			});
+
+		/*
+		* Функционал заказа с таблицы
+		* */
+		var tableCellTitle,  thisTableRow, cellData, summaryData="", titleItem;
+		$('.product-table .btn-order').click(function () {
+			thisTableRow = $(this).closest($('.table-row'));
+			tableCellTitle = $(this).closest($('.product-table ul')).find('li:first-of-type .table-cell');
+			var tableCellTitleLength = tableCellTitle.length;
+			tableCellTitle.each(function (index) {
+				if(index < tableCellTitleLength-1){
+					titleItem = $(this).text();
+					cellData = $(thisTableRow.find('.table-cell')[index]).text();
+					summaryData += titleItem + ": " + cellData + "\n";
+				}
+			});
+
+		}).fancybox({
+			afterShow: function afterShow () {
+				$('#wpcf7-f652-p268-o4 textarea[name="tableData"]').val(summaryData);
+				$('#wpcf7-f652-p268-o4 input[name="curLinkHrefPage"]').val(curLinkHrefPage);
+			},
+			afterClose: function afterClose () {
+				summaryData = '';
+			}
+		});
+
+		$('.product__order .btn-order').fancybox({
+			afterShow: function afterShow () {
+				$('#wpcf7-f653-p268-o5 input[name="curLinkHrefPage"]').val(curLinkHrefPage);
+			}
+		});
+
+
 	}); // end ready
 })(jQuery);
+
+

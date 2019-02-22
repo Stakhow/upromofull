@@ -336,6 +336,7 @@ function is_registered_sidebar( $sidebar_id ) {
  *                               panel and/or theme.
  * }
  */
+
 function wp_register_sidebar_widget( $id, $name, $output_callback, $options = array() ) {
 	global $wp_registered_widgets, $wp_registered_widget_controls, $wp_registered_widget_updates, $_wp_deprecated_widgets_callbacks;
 
